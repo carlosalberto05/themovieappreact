@@ -1,27 +1,24 @@
-import { AccountCircle } from "@mui/icons-material";
-import { AppBar, Box, IconButton, Toolbar, Typography } from "@mui/material";
+// import { AccountCircle } from "@mui/icons-material";
+import { AppBar, Box, Toolbar } from "@mui/material";
+import imgDacodes from "../../assets/DacodesLogo.jpg";
+import imgUser from "../../assets/user.jpg";
 
 const Navbar = () => {
   const auth = true;
   return (
     <Box>
       <AppBar position="static" style={{ backgroundColor: "#5141EA" }}>
-        <Toolbar>
-          <Typography variant="h6" component="div" sx={{ flexGrow: 1 }}>
-            Dacodes
-          </Typography>
+        <Toolbar
+          style={{
+            display: "flex",
+            justifyContent: "space-between",
+            marginLeft: "3%",
+          }}
+        >
+          <img src={imgDacodes} alt="logoDacodes" style={{ width: "172px" }} />
           {auth && (
             <div>
-              <IconButton
-                size="large"
-                aria-label="account of current user"
-                aria-controls="menu-appbar"
-                aria-haspopup="true"
-                // onClick={handleMenu}
-                color="inherit"
-              >
-                <AccountCircle />
-              </IconButton>
+              <img src={imgUser} alt="user" style={{ width: "60%" }} />
             </div>
           )}
         </Toolbar>

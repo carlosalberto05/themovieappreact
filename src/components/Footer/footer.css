@@ -1,0 +1,48 @@
+ .footer {
+		width: 100%;
+		background: linear-gradient(#5141EA, #468DD8, #3AE3C3);
+		position: relative;
+}
+
+
+
+.container{
+padding-top: 5%;
+	width: 50%;
+	margin-left: 5%;
+	position: relative;
+		/* Añadido para ajustar el contenido con respecto a la forma de onda */
+		z-index: 2;
+}
+
+.title {
+	color: #FFF;
+		font-size: 22px;
+		font-family: Poppins;
+		font-style: normal;
+		line-height: normal;
+} 
+
+.text {
+	color: #FFF;
+	font-family: Poppins;
+}
+
+.img-footer{
+	margin-top: 3%;
+	display: flex;
+	align-items: center;
+	
+}
+.img-footer img {
+	width: 7%;
+}
+
+
+
+
+
+
+
+
+
