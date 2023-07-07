@@ -1,7 +1,11 @@
  .footer {
 		width: 100%;
-		background: linear-gradient(#5141EA, #468DD8, #3AE3C3);
-		position: relative;
+		background-image: url("../../assets/wave.svg");
+		background-repeat: no-repeat;
+		background-size: cover;
+		position: fixed;
+		bottom: 0;
+		left: 0;
 }
 
 
