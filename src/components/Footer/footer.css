@@ -1,11 +1,16 @@
+ .containerFooter{
+	background-color: #03067B;
+ }
+ 
+ 
  .footer {
 		width: 100%;
 		background-image: url("../../assets/wave.svg");
 		background-repeat: no-repeat;
 		background-size: cover;
-		position: fixed;
+		/* position: fixed;
 		bottom: 0;
-		left: 0;
+		left: 0; */
 }
 
 
@@ -15,7 +20,6 @@ padding-top: 5%;
 	width: 50%;
 	margin-left: 5%;
 	position: relative;
-		/* Añadido para ajustar el contenido con respecto a la forma de onda */
 		z-index: 2;
 }
 
