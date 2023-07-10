@@ -1,12 +1,14 @@
-import { useState } from "react";
+import React, { useState } from "react";
 import { Grid, Paper } from "@mui/material";
 import Layout from "../../components/Layout";
 import CustomButton from "../../components/Button";
 import "./home.css";
 import { Typography } from "@mui/material";
+import imgPeli from "../../assets/peli.jpg";
 
 const Home = () => {
-  const [selectedButton, setSelectedButton] = useState(0); // Por defecto, el primer botón está seleccionado
+  const [selectedButton, setSelectedButton] = useState(0);
+  const [hoveredItem, setHoveredItem] = useState(null);
 
   // Datos simulados para los Paper
   const paperData = Array.from({ length: 15 }, (_, index) => index);
@@ -54,33 +56,32 @@ const Home = () => {
             Texto introductorio
           </Typography>
         </div>
-        {/* <Grid container spacing={2} mt={2} paddingBottom={4}>
-          <Grid item xs={12}>
-            <Grid container justifyContent="space-around" spacing={2}>
-              {paperData.map((item) => (
-                <Grid item key={item}>
-                  <Paper sx={{ height: 367, width: 253, borderRadius: 10 }} />
-                </Grid>
-              ))}
+
+        <Grid
+          container
+          spacing={2}
+          mt={2}
+          paddingBottom={4}
+          className="containerImages"
+        >
+          {paperData.map((item) => (
+            <Grid item key={item} xs={6} sm={6} md={4} lg={2.4}>
+              <div
+                className={`subContainerImg ${
+                  hoveredItem === item ? "hovered" : ""
+                }`}
+                onMouseEnter={() => setHoveredItem(item)}
+                onMouseLeave={() => setHoveredItem(null)}
+              >
+                <img src={imgPeli} style={{ borderRadius: "50px" }} />
+                {hoveredItem === item && (
+                  <div className="imageOverlay">
+                    <p className="imageText">Descripción de la imagen</p>
+                  </div>
+                )}
+              </div>
             </Grid>
-          </Grid>
-        </Grid> */}
-        <Grid container spacing={2} mt={2} paddingBottom={4}>
-          <Grid item xs={12}>
-            <Grid container justifyContent="space-around" spacing={2}>
-              {paperData.map((item) => (
-                <Grid item key={item} xs={2}>
-                  <Paper
-                    sx={{
-                      height: 367,
-                      width: "90%",
-                      borderRadius: 10,
-                    }}
-                  />
-                </Grid>
-              ))}
-            </Grid>
-          </Grid>
+          ))}
         </Grid>
       </>
     </Layout>
