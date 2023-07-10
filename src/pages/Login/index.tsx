@@ -1,13 +1,32 @@
-import React, { ChangeEvent } from "react";
+import React, { ChangeEvent, useState } from "react";
 import { Box, Checkbox, FormControlLabel, Typography } from "@mui/material";
 import Layout from "../../components/Layout";
 import "./login.css";
+import CustomButton from "../../components/Button";
 
 const Login = () => {
+  const [auth, setAuth] = useState(false);
+  const [email, setEmail] = useState("");
+  const [password, setPassword] = useState("");
+
   const handleChange = (e: ChangeEvent<HTMLInputElement>) => {
     const { name, value } = e.target;
-    console.log(name);
-    console.log(value);
+    if (name === "email") {
+      setEmail(value);
+    } else if (name === "password") {
+      setPassword(value);
+    }
+  };
+
+  const handleOnSubmit = (e: any) => {
+    e.preventDefault();
+
+    const data = {
+      email: email,
+      password: password,
+    };
+    // console.log(`email:${email} y password: ${password}`);
+    console.log(data);
   };
 
   return (
@@ -21,7 +40,7 @@ const Login = () => {
             ¡Bienvenido!
           </Typography>
           <br />
-          <form>
+          <form onSubmit={handleOnSubmit}>
             <div className="containerForm">
               <label>Correo electrónico de Dacodes</label>
               <input
@@ -29,6 +48,7 @@ const Login = () => {
                 className="input-style"
                 type="email"
                 onChange={handleChange}
+                value={email}
               />
               <label>Contraseña</label>
               <input
@@ -36,12 +56,15 @@ const Login = () => {
                 className="input-style"
                 type="password"
                 onChange={handleChange}
+                value={password}
               />
 
               <FormControlLabel
                 control={
                   <Checkbox
-                    defaultChecked
+                    value={auth}
+                    onChange={(e) => setAuth(e.target.checked)}
+                    checked={auth}
                     sx={{
                       color: "rgba(217, 217, 217, 0.50)",
                       "&.Mui-checked": {
@@ -52,6 +75,10 @@ const Login = () => {
                 }
                 label="He leido y acepto los terminos y condiciones"
               />
+
+              <div className="container-button">
+                <CustomButton label="Crear cuenta" />
+              </div>
             </div>
           </form>
         </Box>

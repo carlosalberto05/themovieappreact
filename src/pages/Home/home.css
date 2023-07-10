@@ -1,0 +1,16 @@
+.groupButtons{
+	display: flex;
+	flex-direction: row;
+	justify-content: space-around;
+	padding-top: 3%;
+}
+
+.buton-style{
+	color: white;
+	border-radius: 50px;
+	width: 10%;
+	background: linear-gradient(#3AE3C3,
+				#4E6CE4,
+				#563FF0);
+	border: none;
+}

@@ -6,6 +6,7 @@
 .containerForm {
 	display: flex;
 	flex-direction: column;
+
 }
 
 label {
@@ -22,6 +23,11 @@ label {
 	margin-bottom: 2%;
 	outline: none;
 	color:white
+}
+
+.container-button {
+	margin-top: 2%;
+	width: 15%;
 }
 
 /* .custom-form-control-label {
