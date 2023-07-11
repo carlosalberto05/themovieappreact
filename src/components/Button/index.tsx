@@ -7,7 +7,7 @@ interface IButton {
   variant?: "solid" | "outline";
   styles?: React.CSSProperties;
   disabled?: boolean;
-  isSelected?: boolean; // Nueva prop
+  isSelected?: boolean;
 }
 
 const CustomButton = (props: IButton) => {

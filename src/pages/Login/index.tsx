@@ -25,7 +25,6 @@ const Login = () => {
       email: email,
       password: password,
     };
-    // console.log(`email:${email} y password: ${password}`);
     console.log(data);
   };
 
