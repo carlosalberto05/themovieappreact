@@ -2,8 +2,10 @@
 import { AppBar, Box, Toolbar } from "@mui/material";
 import imgDacodes from "../../assets/DacodesLogo.jpg";
 import imgUser from "../../assets/user.jpg";
+import { useNavigate } from "react-router-dom";
 
 const Navbar = () => {
+  const navigate = useNavigate();
   const auth = true;
   return (
     <Box>
@@ -15,7 +17,12 @@ const Navbar = () => {
             marginLeft: "3%",
           }}
         >
-          <img src={imgDacodes} alt="logoDacodes" style={{ width: "172px" }} />
+          <img
+            src={imgDacodes}
+            alt="logoDacodes"
+            style={{ width: "172px" }}
+            onClick={() => navigate("/")}
+          />
           {auth && (
             <div>
               <img src={imgUser} alt="user" style={{ width: "60%" }} />

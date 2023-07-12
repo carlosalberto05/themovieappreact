@@ -6,11 +6,25 @@ import "./home.css";
 import { Typography } from "@mui/material";
 import imgPeli from "../../assets/peli.jpg";
 import Rating from "@mui/material/Rating";
+import Pagination from "@mui/material/Pagination";
+import { createTheme, ThemeProvider } from "@mui/material/styles";
 
 const Home = () => {
-  // Datos simulados para los Paper
   const paperData = Array.from({ length: 15 }, (_, index) => index);
   const [selectedButton, setSelectedButton] = useState(0);
+  const [page, setPage] = useState(1);
+  const theme = createTheme({
+    palette: {
+      primary: {
+        main: "#5141EA",
+        contrastText: "#fff",
+      },
+    },
+  });
+
+  const handleChange = (event: React.ChangeEvent<unknown>, value: number) => {
+    setPage(value);
+  };
   const value = 2;
 
   const [isHovered, setIsHovered] = useState(
@@ -117,6 +131,16 @@ const Home = () => {
             </Grid>
           ))}
         </Grid>
+        <div className="containerPagination">
+          <ThemeProvider theme={theme}>
+            <Pagination
+              count={2}
+              page={page}
+              onChange={handleChange}
+              color="primary"
+            />
+          </ThemeProvider>
+        </div>
       </>
     </Layout>
   );

@@ -44,14 +44,14 @@
 }
 
 .images {
-	width: 90%;
+	width: 100%;
 	border-radius: 50px;
 	z-index: 1;
 	object-fit: cover;
 }
 
 .hovered{
-	width: 90%;
+	width: 100%;
 	height: 100%;
 	background-color: #563FF0;
   	z-index: 2;
@@ -83,4 +83,11 @@
 .rating{
 	margin-left: 10%;
 		margin-right: 10%;
+}
+
+.containerPagination{
+	display: flex;
+	justify-content: center;
+	margin-top: 3%;
+	padding-bottom: 5%;
 }
