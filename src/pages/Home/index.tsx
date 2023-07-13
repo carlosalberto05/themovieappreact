@@ -17,11 +17,11 @@ interface Movie {
 }
 
 const Home = () => {
-  const paperData = Array.from({ length: 15 }, (_, index) => index);
   const [selectedButton, setSelectedButton] = useState(0);
   const [page, setPage] = useState(1);
   const [data, setData] = useState<Movie[]>([]);
-  const [value, setValue] = useState(0);
+  const [isHovered, setIsHovered] = useState(Array(data.length).fill(false));
+  const [movieList, setMovieList] = useState("now_playing");
 
   const theme = createTheme({
     palette: {
@@ -32,18 +32,32 @@ const Home = () => {
     },
   });
 
-  const url =
-    "https://api.themoviedb.org/3/movie/now_playing?language=es-ES&page=1";
-  const options = {
-    method: "GET",
-    headers: {
-      accept: "application/json",
-      Authorization:
-        "Bearer eyJhbGciOiJIUzI1NiJ9.eyJhdWQiOiIxMjg0MDIyMTUxNzJmZWE0Zjk2NTY2YWUwMTlmNmI1ZCIsInN1YiI6IjVkY2FlMmRjNDcwZWFkMDAxNTliNDJlMSIsInNjb3BlcyI6WyJhcGlfcmVhZCJdLCJ2ZXJzaW9uIjoxfQ.gyQUaLyGm3nsagVVqkhs368oxNUNoQjpx4mGUoV_yos",
-    },
-  };
-
   useEffect(() => {
+    const selectMovielist = () => {
+      if (selectedButton === 0) {
+        setMovieList("now_playing");
+      } else if (selectedButton === 1) {
+        setMovieList("now_playing");
+      } else if (selectedButton === 2) {
+        setMovieList("popular");
+      } else if (selectedButton === 3) {
+        setMovieList("top_rated");
+      } else if (selectedButton === 4) {
+        setMovieList("upcoming");
+      }
+    };
+    selectMovielist();
+    // const url =
+    //   "https://api.themoviedb.org/3/movie/now_playing?language=es-ES&page=1";
+    const url = `https://api.themoviedb.org/3/movie/${movieList}?language=es-ES&page=1`;
+    const options = {
+      method: "GET",
+      headers: {
+        accept: "application/json",
+        Authorization:
+          "Bearer eyJhbGciOiJIUzI1NiJ9.eyJhdWQiOiIxMjg0MDIyMTUxNzJmZWE0Zjk2NTY2YWUwMTlmNmI1ZCIsInN1YiI6IjVkY2FlMmRjNDcwZWFkMDAxNTliNDJlMSIsInNjb3BlcyI6WyJhcGlfcmVhZCJdLCJ2ZXJzaW9uIjoxfQ.gyQUaLyGm3nsagVVqkhs368oxNUNoQjpx4mGUoV_yos",
+      },
+    };
     try {
       fetch(url, options)
         .then((res) => res.json())
@@ -52,15 +66,11 @@ const Home = () => {
     } catch (error) {
       console.log(error);
     }
-  }, []);
+  }, [movieList, selectedButton]);
 
   const handleChange = (event: React.ChangeEvent<unknown>, value: number) => {
     setPage(value);
   };
-
-  const [isHovered, setIsHovered] = useState(
-    Array(paperData.length).fill(false)
-  );
 
   const handleMouseEnter = (index: number) => {
     const updatedHovered = [...isHovered];
@@ -74,7 +84,7 @@ const Home = () => {
     setIsHovered(updatedHovered);
   };
 
-  console.log(data);
+  // console.log(data);
 
   return (
     <Layout>
