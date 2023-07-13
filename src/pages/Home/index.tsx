@@ -1,18 +1,28 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { Grid } from "@mui/material";
 import Layout from "../../components/Layout";
 import CustomButton from "../../components/Button";
 import "./home.css";
 import { Typography } from "@mui/material";
-import imgPeli from "../../assets/peli.jpg";
 import Rating from "@mui/material/Rating";
 import Pagination from "@mui/material/Pagination";
 import { createTheme, ThemeProvider } from "@mui/material/styles";
+
+interface Movie {
+  title: string;
+  release_date: string;
+  poster_path: string;
+  overview: string;
+  vote_average: number;
+}
 
 const Home = () => {
   const paperData = Array.from({ length: 15 }, (_, index) => index);
   const [selectedButton, setSelectedButton] = useState(0);
   const [page, setPage] = useState(1);
+  const [data, setData] = useState<Movie[]>([]);
+  const [value, setValue] = useState(0);
+
   const theme = createTheme({
     palette: {
       primary: {
@@ -22,26 +32,49 @@ const Home = () => {
     },
   });
 
+  const url =
+    "https://api.themoviedb.org/3/movie/now_playing?language=es-ES&page=1";
+  const options = {
+    method: "GET",
+    headers: {
+      accept: "application/json",
+      Authorization:
+        "Bearer eyJhbGciOiJIUzI1NiJ9.eyJhdWQiOiIxMjg0MDIyMTUxNzJmZWE0Zjk2NTY2YWUwMTlmNmI1ZCIsInN1YiI6IjVkY2FlMmRjNDcwZWFkMDAxNTliNDJlMSIsInNjb3BlcyI6WyJhcGlfcmVhZCJdLCJ2ZXJzaW9uIjoxfQ.gyQUaLyGm3nsagVVqkhs368oxNUNoQjpx4mGUoV_yos",
+    },
+  };
+
+  useEffect(() => {
+    try {
+      fetch(url, options)
+        .then((res) => res.json())
+        .then((json) => setData(json.results))
+        .catch((err) => console.error("error:" + err));
+    } catch (error) {
+      console.log(error);
+    }
+  }, []);
+
   const handleChange = (event: React.ChangeEvent<unknown>, value: number) => {
     setPage(value);
   };
-  const value = 2;
 
   const [isHovered, setIsHovered] = useState(
     Array(paperData.length).fill(false)
   );
 
-  const handleMouseEnter = (index: any) => {
+  const handleMouseEnter = (index: number) => {
     const updatedHovered = [...isHovered];
     updatedHovered[index] = true;
     setIsHovered(updatedHovered);
   };
 
-  const handleMouseLeave = (index: any) => {
+  const handleMouseLeave = (index: number) => {
     const updatedHovered = [...isHovered];
     updatedHovered[index] = false;
     setIsHovered(updatedHovered);
   };
+
+  console.log(data);
 
   return (
     <Layout>
@@ -94,34 +127,33 @@ const Home = () => {
           paddingBottom={4}
           className="containerImages"
         >
-          {paperData.map((item, index) => (
-            <Grid item key={item} xs={6} sm={6} md={4} lg={2.4}>
+          {data.map((item, index) => (
+            <Grid item key={index} xs={6} sm={6} md={4} lg={2.4}>
               <div className="subContainerImg">
                 <div
                   className="imageOverlay"
                   onMouseEnter={() => handleMouseEnter(index)}
                   onMouseLeave={() => handleMouseLeave(index)}
                 >
-                  <img src={imgPeli} className="images" alt="" />
+                  <img
+                    src={`https://image.tmdb.org/t/p/w500${item.poster_path}`}
+                    className="images"
+                    alt=""
+                  />
+
                   {isHovered[index] && (
                     <div className="hovered">
-                      <label className="movieTitle">
-                        Spider-Man: lejos de casa
-                      </label>
+                      <label className="movieTitle">{item.title}</label>
                       <label className="movieData">
-                        2019 . Acción/Aventura . 2h 10m{" "}
+                        {item.release_date.split("-")[0]} . Acción/Aventura
                       </label>
                       <p className="sinopsis">
-                        Lorem ipsum dolor sit amet consectetur, adipisicing
-                        elit. Ab blanditiis quod iusto. Fugit laborum, adipisci
-                        nam dolores esse aut magnam similique consequatur
-                        assumenda porro eum nobis maiores. Expedita, accusantium
-                        doloremque.
+                        {item.overview.slice(0, 150)}...
                       </p>
                       <Rating
                         className="rating"
                         name="read-only"
-                        value={value}
+                        value={item.vote_average / 2}
                         readOnly
                       />
                     </div>

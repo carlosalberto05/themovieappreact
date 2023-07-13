@@ -18,7 +18,7 @@ const Login = () => {
     }
   };
 
-  const handleOnSubmit = (e: any) => {
+  const handleOnSubmit = (e: ChangeEvent<HTMLFormElement>) => {
     e.preventDefault();
 
     const data = {
