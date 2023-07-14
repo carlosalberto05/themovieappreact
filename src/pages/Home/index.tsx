@@ -19,9 +19,11 @@ interface Movie {
 const Home = () => {
   const [selectedButton, setSelectedButton] = useState(0);
   const [page, setPage] = useState(1);
+  const [totalPages, setTotalPages] = useState(1);
   const [data, setData] = useState<Movie[]>([]);
   const [isHovered, setIsHovered] = useState(Array(data.length).fill(false));
   const [movieList, setMovieList] = useState("now_playing");
+  const [title, setTitle] = useState("");
 
   const theme = createTheme({
     palette: {
@@ -36,20 +38,24 @@ const Home = () => {
     const selectMovielist = () => {
       if (selectedButton === 0) {
         setMovieList("now_playing");
+        setTitle("Latest");
       } else if (selectedButton === 1) {
         setMovieList("now_playing");
+        setTitle("Now Playing");
       } else if (selectedButton === 2) {
         setMovieList("popular");
+        setTitle("Popular");
       } else if (selectedButton === 3) {
         setMovieList("top_rated");
+        setTitle("Top rated");
       } else if (selectedButton === 4) {
         setMovieList("upcoming");
+        setTitle("Upcoming");
       }
     };
     selectMovielist();
-    // const url =
-    //   "https://api.themoviedb.org/3/movie/now_playing?language=es-ES&page=1";
-    const url = `https://api.themoviedb.org/3/movie/${movieList}?language=es-ES&page=1`;
+
+    const url = `https://api.themoviedb.org/3/movie/${movieList}?language=es-ES&page=${page}`;
     const options = {
       method: "GET",
       headers: {
@@ -61,14 +67,17 @@ const Home = () => {
     try {
       fetch(url, options)
         .then((res) => res.json())
-        .then((json) => setData(json.results))
+        .then((json) => {
+          setData(json.results);
+          setTotalPages(json.total_pages);
+        })
         .catch((err) => console.error("error:" + err));
     } catch (error) {
       console.log(error);
     }
-  }, [movieList, selectedButton]);
+  }, [movieList, selectedButton, page]);
 
-  const handleChange = (event: React.ChangeEvent<unknown>, value: number) => {
+  const handleChange = (e: React.ChangeEvent<unknown>, value: number) => {
     setPage(value);
   };
 
@@ -123,7 +132,7 @@ const Home = () => {
         </div>
         <div className="textHome">
           <Typography variant="h4" color={"white"}>
-            Latest
+            {title}
           </Typography>
           <Typography variant="subtitle1" color={"white"}>
             Texto introductorio
@@ -176,7 +185,7 @@ const Home = () => {
         <div className="containerPagination">
           <ThemeProvider theme={theme}>
             <Pagination
-              count={2}
+              count={totalPages}
               page={page}
               onChange={handleChange}
               color="primary"
