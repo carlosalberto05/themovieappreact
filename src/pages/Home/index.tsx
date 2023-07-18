@@ -36,10 +36,7 @@ const Home = () => {
 
   useEffect(() => {
     const selectMovielist = () => {
-      if (selectedButton === 0) {
-        setMovieList("now_playing");
-        setTitle("Latest");
-      } else if (selectedButton === 1) {
+      if (selectedButton === 1) {
         setMovieList("now_playing");
         setTitle("Now Playing");
       } else if (selectedButton === 2) {
@@ -99,12 +96,6 @@ const Home = () => {
     <Layout>
       <>
         <div className="groupButtons">
-          <CustomButton
-            label="Latest"
-            styles={{ width: "10%" }}
-            isSelected={selectedButton === 0}
-            onClick={() => setSelectedButton(0)}
-          />
           <CustomButton
             label="Now Playing"
             styles={{ width: "10%" }}

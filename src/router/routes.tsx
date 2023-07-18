@@ -1,17 +1,19 @@
 import { Navigate, Route, Routes } from "react-router-dom";
 import Home from "../pages/Home";
 import Login from "../pages/Login";
+import PrivateRoute from "./PrivateRoute";
 
 const Router = () => {
-  const isLogged = false;
+  // const isLogged = false;
+  const guestSessionId = localStorage.getItem("guestSessionId");
 
   return (
     <Routes>
-      <Route
-        path="/"
-        element={isLogged ? <Navigate to="/inicio" /> : <Login />}
-      />
-      <Route path="/inicio" element={<Home />} />
+      <Route path="/" element={<Login />} />
+
+      <Route element={<PrivateRoute />}>
+        <Route path="/inicio" element={<Home />} />
+      </Route>
     </Routes>
   );
 };

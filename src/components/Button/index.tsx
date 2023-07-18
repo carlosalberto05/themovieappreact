@@ -4,33 +4,24 @@ import "./button.css";
 interface IButton {
   label: string | React.ReactElement;
   onClick?: () => void;
-  variant?: "solid" | "outline";
   styles?: React.CSSProperties;
   disabled?: boolean;
   isSelected?: boolean;
 }
 
 const CustomButton = (props: IButton) => {
-  const {
-    onClick,
-    label,
-    variant = "solid",
-    disabled,
-    styles,
-    isSelected,
-  } = props;
+  const { onClick, label, disabled, styles, isSelected } = props;
   return (
     <button
       onClick={onClick}
-      style={{ ...styles, backgroundColor: disabled ? "#CDCDCD" : "" }}
+      style={{ ...styles }}
       disabled={disabled}
       className={
-        // variant === "solid" ? "buttonLogInSolid" : "buttonLogInOutlined"
-        variant === "solid"
-          ? isSelected
-            ? "buttonLogInSolidSelected"
-            : "buttonLogInSolid"
-          : "buttonLogInOutlined"
+        isSelected
+          ? "buttonLogInSolidSelected"
+          : disabled
+          ? "buttonLogInDesabled"
+          : "buttonLogInSolid"
       }
     >
       {label}
