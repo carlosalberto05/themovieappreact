@@ -1,15 +1,22 @@
-import React, { ChangeEvent, useEffect, useState } from "react";
+import React, { ChangeEvent, useState } from "react";
 import { Box, Checkbox, FormControlLabel, Typography } from "@mui/material";
 import Layout from "../../components/Layout";
+import { IAlert } from "../../interfaces/alert";
 import "./login.css";
 import CustomButton from "../../components/Button";
 import { useNavigate } from "react-router-dom";
+import CustomAlert from "../../components/CustomAlert";
 
 const Login = () => {
   const [check, setCheck] = useState(false);
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const navigate = useNavigate();
+  const [alert, setAlert] = useState<IAlert>({
+    show: false,
+    message: "",
+    severity: "success",
+  });
 
   const handleChange = (e: ChangeEvent<HTMLInputElement>) => {
     const { name, value } = e.target;
@@ -26,8 +33,26 @@ const Login = () => {
 
   const isFieldsEmpty = checkFields();
 
+  const handleValidate = () => {
+    const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+    const passwordRegex = /^(?=.*[A-Z]).{8,}$/;
+    if (!emailRegex.test(email) || !passwordRegex.test(password)) {
+      return false;
+    }
+    return true;
+  };
+
   const handleOnSubmit = async (e: ChangeEvent<HTMLFormElement>) => {
     e.preventDefault();
+
+    if (!handleValidate()) {
+      setAlert({
+        show: true,
+        message: "Verifica que el correo y la contraseña estén correctos",
+        severity: "error",
+      });
+      return;
+    }
 
     try {
       //Llamada a la API de autenticación
@@ -108,6 +133,18 @@ const Login = () => {
               <div className="container-button">
                 <CustomButton label="Crear cuenta" disabled={isFieldsEmpty} />
               </div>
+              <CustomAlert
+                message={alert.message}
+                severity={alert.severity}
+                show={alert.show}
+                onClose={() => {
+                  setAlert({
+                    show: false,
+                    message: "",
+                    severity: alert.severity,
+                  });
+                }}
+              />
             </div>
           </form>
         </Box>
