@@ -3,13 +3,13 @@ import { Box, Checkbox, FormControlLabel, Typography } from "@mui/material";
 import Layout from "../../components/Layout";
 import "./login.css";
 import CustomButton from "../../components/Button";
-import { Navigate } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 
 const Login = () => {
   const [check, setCheck] = useState(false);
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
-  const [guestSessionId, setGuestSessionId] = useState("");
+  const navigate = useNavigate();
 
   const handleChange = (e: ChangeEvent<HTMLInputElement>) => {
     const { name, value } = e.target;
@@ -42,13 +42,11 @@ const Login = () => {
         },
       };
       const response = await fetch(url, options);
-      if (!response.ok) {
-        throw new Error("Error en la solicitud a la API");
-      }
       const guesId = await response.json();
-      // Guardamos el guest_session_id en el estado y en el localStorage.
-      setGuestSessionId(guesId.guest_session_id);
       sessionStorage.setItem("guestSessionId", guesId.guest_session_id);
+      setTimeout(() => {
+        navigate("/inicio");
+      });
     } catch (error) {
       console.error("Error:", error);
     }

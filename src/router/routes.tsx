@@ -1,12 +1,9 @@
-import { Navigate, Route, Routes } from "react-router-dom";
+import { Route, Routes } from "react-router-dom";
 import Home from "../pages/Home";
 import Login from "../pages/Login";
 import PrivateRoute from "./PrivateRoute";
 
 const Router = () => {
-  // const isLogged = false;
-  const guestSessionId = localStorage.getItem("guestSessionId");
-
   return (
     <Routes>
       <Route path="/" element={<Login />} />

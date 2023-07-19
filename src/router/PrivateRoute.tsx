@@ -1,8 +1,13 @@
+import { useState } from "react";
 import { Navigate, Outlet } from "react-router-dom";
 
 const PrivateRoute = () => {
-  const isAuthenticated = true;
-  if (isAuthenticated) return <Outlet />;
+  const [authenticated, setAuthenticated] = useState(false);
+  const getToken = () => {
+    return sessionStorage.getItem("guestSessionId");
+  };
+  const token = getToken();
+  if (authenticated || token) return <Outlet />;
   return <Navigate to="/" />;
 };
 
