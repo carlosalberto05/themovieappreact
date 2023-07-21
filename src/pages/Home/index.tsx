@@ -7,6 +7,7 @@ import { Typography } from "@mui/material";
 import Rating from "@mui/material/Rating";
 import Pagination from "@mui/material/Pagination";
 import { createTheme, ThemeProvider } from "@mui/material/styles";
+import ModalLoading from "../../components/ModaLoading";
 
 interface Movie {
   title: string;
@@ -17,13 +18,14 @@ interface Movie {
 }
 
 const Home = () => {
-  const [selectedButton, setSelectedButton] = useState(0);
+  const [selectedButton, setSelectedButton] = useState(1);
   const [page, setPage] = useState(1);
   const [totalPages, setTotalPages] = useState(1);
   const [data, setData] = useState<Movie[]>([]);
   const [isHovered, setIsHovered] = useState(Array(data.length).fill(false));
   const [movieList, setMovieList] = useState("now_playing");
   const [title, setTitle] = useState("");
+  const [loading, setLoading] = useState(false);
 
   const theme = createTheme({
     palette: {
@@ -35,6 +37,8 @@ const Home = () => {
   });
 
   useEffect(() => {
+    setLoading(true);
+
     const selectMovielist = () => {
       if (selectedButton === 1) {
         setMovieList("now_playing");
@@ -68,9 +72,13 @@ const Home = () => {
           setData(json.results);
           setTotalPages(json.total_pages);
         })
-        .catch((err) => console.error("error:" + err));
+        .catch((err) => console.error("error:" + err))
+        .finally(() => {
+          setLoading(false);
+        });
     } catch (error) {
       console.log(error);
+      setLoading(false);
     }
   }, [movieList, selectedButton, page]);
 
@@ -95,7 +103,8 @@ const Home = () => {
   return (
     <Layout>
       <>
-        <div className="groupButtons">
+        <ModalLoading loading={loading} />
+        {/* <div className="groupButtons">
           <CustomButton
             label="Now Playing"
             styles={{ width: "10%" }}
@@ -120,7 +129,41 @@ const Home = () => {
             isSelected={selectedButton === 4}
             onClick={() => setSelectedButton(4)}
           />
-        </div>
+        </div> */}
+        <Grid container spacing={2} marginTop={1}>
+          <Grid item xs={3}>
+            <CustomButton
+              label="Now Playing"
+              // styles={{ width: "10%" }}
+              isSelected={selectedButton === 1}
+              onClick={() => setSelectedButton(1)}
+            />
+          </Grid>
+          <Grid item xs={3}>
+            <CustomButton
+              label="Popular"
+              // styles={{ width: "10%" }}
+              isSelected={selectedButton === 2}
+              onClick={() => setSelectedButton(2)}
+            />
+          </Grid>
+          <Grid item xs={3}>
+            <CustomButton
+              label="Top rated"
+              // styles={{ width: "10%" }}
+              isSelected={selectedButton === 3}
+              onClick={() => setSelectedButton(3)}
+            />
+          </Grid>
+          <Grid item xs={3}>
+            <CustomButton
+              label="Upcoming"
+              // styles={{ width: "10%" }}
+              isSelected={selectedButton === 4}
+              onClick={() => setSelectedButton(4)}
+            />
+          </Grid>
+        </Grid>
         <div className="textHome">
           <Typography variant="h4" color={"white"}>
             {title}

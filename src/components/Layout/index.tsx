@@ -12,8 +12,8 @@ const Layout = ({ children }: Props) => {
       <Navbar />
       <Container
         style={{
-          backgroundColor: "#03067B",
-          maxWidth: "100%",
+          // backgroundColor: "#03067B",
+          maxWidth: "200vh",
           minHeight: "80vh",
         }}
       >
