@@ -6,12 +6,14 @@ import "./login.css";
 import CustomButton from "../../components/Button";
 import { useNavigate } from "react-router-dom";
 import CustomAlert from "../../components/CustomAlert";
+import ModalLoading from "../../components/ModaLoading";
 
 const Login = () => {
   const [check, setCheck] = useState(false);
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const navigate = useNavigate();
+  const [loading, setLoading] = useState(false);
   const [alert, setAlert] = useState<IAlert>({
     show: false,
     message: "",
@@ -44,13 +46,14 @@ const Login = () => {
 
   const handleOnSubmit = async (e: ChangeEvent<HTMLFormElement>) => {
     e.preventDefault();
-
+    setLoading(true);
     if (!handleValidate()) {
       setAlert({
         show: true,
         message: "Verifica que el correo y la contraseña estén correctos",
         severity: "error",
       });
+      setLoading(false);
       return;
     }
 
@@ -69,11 +72,13 @@ const Login = () => {
       const response = await fetch(url, options);
       const guesId = await response.json();
       sessionStorage.setItem("guestSessionId", guesId.guest_session_id);
+      setLoading(false);
       setTimeout(() => {
         navigate("/inicio");
       });
     } catch (error) {
       console.error("Error:", error);
+      setLoading(false);
     }
 
     const data = {
@@ -86,6 +91,7 @@ const Login = () => {
   return (
     <Layout>
       <>
+        <ModalLoading loading={loading} />
         <Box className="container-login">
           <Typography variant="h4" color={"white"}>
             Login

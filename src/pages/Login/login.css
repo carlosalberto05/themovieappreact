@@ -10,19 +10,18 @@
 }
 
 label {
-	color: white;
+	color: black;
 	margin-bottom: 0.5%;
 }
 
 .input-style {
 	width: 30%;
-	background-color: #5141EA;
 	border-radius: 50px;
 	border: 0;
+	border: 1px solid #5141EA;
 	padding: 1%;
 	margin-bottom: 2%;
 	outline: none;
-	color:white
 }
 
 .container-button {

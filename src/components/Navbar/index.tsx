@@ -1,6 +1,6 @@
 // import { AccountCircle } from "@mui/icons-material";
 import { AppBar, Box, Toolbar } from "@mui/material";
-import imgDacodes from "../../assets/DacodesLogo.jpg";
+import theMovie from "../../assets/themovie.svg";
 import imgUser from "../../assets/user.jpg";
 import { useNavigate } from "react-router-dom";
 
@@ -18,7 +18,7 @@ const Navbar = () => {
           }}
         >
           <img
-            src={imgDacodes}
+            src={theMovie}
             alt="logoDacodes"
             style={{ width: "172px" }}
             onClick={() => navigate("/")}

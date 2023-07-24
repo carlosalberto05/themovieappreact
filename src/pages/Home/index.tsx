@@ -104,37 +104,10 @@ const Home = () => {
     <Layout>
       <>
         <ModalLoading loading={loading} />
-        {/* <div className="groupButtons">
-          <CustomButton
-            label="Now Playing"
-            styles={{ width: "10%" }}
-            isSelected={selectedButton === 1}
-            onClick={() => setSelectedButton(1)}
-          />
-          <CustomButton
-            label="Popular"
-            styles={{ width: "10%" }}
-            isSelected={selectedButton === 2}
-            onClick={() => setSelectedButton(2)}
-          />
-          <CustomButton
-            label="Top rated"
-            styles={{ width: "10%" }}
-            isSelected={selectedButton === 3}
-            onClick={() => setSelectedButton(3)}
-          />
-          <CustomButton
-            label="Upcoming"
-            styles={{ width: "10%" }}
-            isSelected={selectedButton === 4}
-            onClick={() => setSelectedButton(4)}
-          />
-        </div> */}
         <Grid container spacing={2} marginTop={1}>
           <Grid item xs={3}>
             <CustomButton
               label="Now Playing"
-              // styles={{ width: "10%" }}
               isSelected={selectedButton === 1}
               onClick={() => setSelectedButton(1)}
             />
@@ -142,7 +115,6 @@ const Home = () => {
           <Grid item xs={3}>
             <CustomButton
               label="Popular"
-              // styles={{ width: "10%" }}
               isSelected={selectedButton === 2}
               onClick={() => setSelectedButton(2)}
             />
@@ -150,7 +122,6 @@ const Home = () => {
           <Grid item xs={3}>
             <CustomButton
               label="Top rated"
-              // styles={{ width: "10%" }}
               isSelected={selectedButton === 3}
               onClick={() => setSelectedButton(3)}
             />
@@ -158,17 +129,16 @@ const Home = () => {
           <Grid item xs={3}>
             <CustomButton
               label="Upcoming"
-              // styles={{ width: "10%" }}
               isSelected={selectedButton === 4}
               onClick={() => setSelectedButton(4)}
             />
           </Grid>
         </Grid>
         <div className="textHome">
-          <Typography variant="h4" color={"white"}>
+          <Typography variant="h4" color={"black"}>
             {title}
           </Typography>
-          <Typography variant="subtitle1" color={"white"}>
+          <Typography variant="subtitle1" color={"black"}>
             Texto introductorio
           </Typography>
         </div>
