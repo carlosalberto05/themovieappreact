@@ -15,6 +15,7 @@ interface Movie {
   poster_path: string;
   overview: string;
   vote_average: number;
+  genre_ids: [];
 }
 
 const Home = () => {
@@ -26,6 +27,7 @@ const Home = () => {
   const [movieList, setMovieList] = useState("now_playing");
   const [title, setTitle] = useState("");
   const [loading, setLoading] = useState(false);
+  const [genres, setGenres] = useState("");
 
   const theme = createTheme({
     palette: {
@@ -35,6 +37,27 @@ const Home = () => {
       },
     },
   });
+
+  useEffect(() => {
+    const url = "https://api.themoviedb.org/3/genre/movie/list";
+    const options = {
+      method: "GET",
+      headers: {
+        accept: "application/json",
+        Authorization:
+          "Bearer eyJhbGciOiJIUzI1NiJ9.eyJhdWQiOiIxMjg0MDIyMTUxNzJmZWE0Zjk2NTY2YWUwMTlmNmI1ZCIsInN1YiI6IjVkY2FlMmRjNDcwZWFkMDAxNTliNDJlMSIsInNjb3BlcyI6WyJhcGlfcmVhZCJdLCJ2ZXJzaW9uIjoxfQ.gyQUaLyGm3nsagVVqkhs368oxNUNoQjpx4mGUoV_yos",
+      },
+    };
+
+    try {
+      fetch(url, options)
+        .then((res) => res.json())
+        .then((json) => setGenres(json.genres))
+        .catch((err) => console.error("error:" + err));
+    } catch (error) {
+      console.log(error);
+    }
+  }, []);
 
   useEffect(() => {
     setLoading(true);
@@ -99,6 +122,7 @@ const Home = () => {
   };
 
   // console.log(data);
+  console.log(genres);
 
   return (
     <Layout>
@@ -150,41 +174,50 @@ const Home = () => {
           paddingBottom={4}
           className="containerImages"
         >
-          {data.map((item, index) => (
-            <Grid item key={index} xs={6} sm={6} md={4} lg={2.4}>
-              <div className="subContainerImg">
-                <div
-                  className="imageOverlay"
-                  onMouseEnter={() => handleMouseEnter(index)}
-                  onMouseLeave={() => handleMouseLeave(index)}
-                >
-                  <img
-                    src={`https://image.tmdb.org/t/p/w500${item.poster_path}`}
-                    className="images"
-                    alt=""
-                  />
+          {data.map((item, index) => {
+            return (
+              <Grid item key={index} xs={6} sm={6} md={4} lg={2.4}>
+                <div className="subContainerImg">
+                  <div
+                    className="imageOverlay"
+                    onMouseEnter={() => handleMouseEnter(index)}
+                    onMouseLeave={() => handleMouseLeave(index)}
+                  >
+                    <img
+                      src={`https://image.tmdb.org/t/p/w500${item.poster_path}`}
+                      className="images"
+                      alt=""
+                    />
 
-                  {isHovered[index] && (
-                    <div className="hovered">
-                      <label className="movieTitle">{item.title}</label>
-                      <label className="movieData">
-                        {item.release_date.split("-")[0]} . Acción/Aventura
-                      </label>
-                      <p className="sinopsis">
-                        {item.overview.slice(0, 150)}...
-                      </p>
-                      <Rating
-                        className="rating"
-                        name="read-only"
-                        value={item.vote_average / 2}
-                        readOnly
-                      />
-                    </div>
-                  )}
+                    {isHovered[index] && (
+                      <div className="hovered">
+                        <label className="movieTitle">{item.title}</label>
+                        <label className="movieData">
+                          {item.release_date.split("-")[0]} .
+                          {item.genre_ids.map((elem, j) => {
+                            for (let i = 0; i < genres.length; i++) {
+                              if (genres[i].id === elem) {
+                                return <label key={j}>{genres[i].name}</label>;
+                              }
+                            }
+                          })}
+                        </label>
+                        <p className="sinopsis">
+                          {item.overview.slice(0, 150)}...
+                        </p>
+                        <Rating
+                          className="rating"
+                          name="read-only"
+                          value={item.vote_average / 2}
+                          readOnly
+                        />
+                      </div>
+                    )}
+                  </div>
                 </div>
-              </div>
-            </Grid>
-          ))}
+              </Grid>
+            );
+          })}
         </Grid>
         <div className="containerPagination">
           <ThemeProvider theme={theme}>

@@ -1,4 +1,3 @@
-// import { AccountCircle } from "@mui/icons-material";
 import { AppBar, Box, Toolbar } from "@mui/material";
 import theMovie from "../../assets/themovie.svg";
 import imgUser from "../../assets/user.jpg";
