@@ -1,8 +1,9 @@
-import { useState } from "react";
+// import { useState } from "react";
 import { Navigate, Outlet } from "react-router-dom";
 
 const PrivateRoute = () => {
-  const [authenticated, setAuthenticated] = useState(false);
+  // const [authenticated, setAuthenticated] = useState(false);
+  const authenticated = false;
   const getToken = () => {
     return sessionStorage.getItem("guestSessionId");
   };

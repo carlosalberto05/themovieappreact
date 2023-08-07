@@ -18,16 +18,22 @@ interface Movie {
   genre_ids: [];
 }
 
+interface Genre {
+  id: number;
+  name: string;
+}
+
 const Home = () => {
   const [selectedButton, setSelectedButton] = useState(1);
   const [page, setPage] = useState(1);
   const [totalPages, setTotalPages] = useState(1);
   const [data, setData] = useState<Movie[]>([]);
-  const [isHovered, setIsHovered] = useState(Array(data.length).fill(false));
+  // const [isHovered, setIsHovered] = useState(Array(data.length).fill(false));
+  const [isHovered, setIsHovered] = useState<boolean[]>([]);
   const [movieList, setMovieList] = useState("now_playing");
   const [title, setTitle] = useState("");
   const [loading, setLoading] = useState(false);
-  const [genres, setGenres] = useState("");
+  const [genres, setGenres] = useState<Genre[]>([]);
 
   const theme = createTheme({
     palette: {
@@ -39,7 +45,7 @@ const Home = () => {
   });
 
   useEffect(() => {
-    const url = "https://api.themoviedb.org/3/genre/movie/list";
+    const url = "https://api.themoviedb.org/3/genre/movie/list?language=es-ES";
     const options = {
       method: "GET",
       headers: {
@@ -105,7 +111,13 @@ const Home = () => {
     }
   }, [movieList, selectedButton, page]);
 
-  const handleChange = (e: React.ChangeEvent<unknown>, value: number) => {
+  useEffect(() => {
+    // Initialize isHovered state array with appropriate length
+    setIsHovered(Array(data.length).fill(false));
+  }, [data]);
+
+  // @ts-ignore
+  const handleChange = (event: React.ChangeEvent<unknown>, value: number) => {
     setPage(value);
   };
 
@@ -120,9 +132,6 @@ const Home = () => {
     updatedHovered[index] = false;
     setIsHovered(updatedHovered);
   };
-
-  // console.log(data);
-  console.log(genres);
 
   return (
     <Layout>
@@ -193,13 +202,30 @@ const Home = () => {
                       <div className="hovered">
                         <label className="movieTitle">{item.title}</label>
                         <label className="movieData">
-                          {item.release_date.split("-")[0]} .
-                          {item.genre_ids.map((elem, j) => {
+                          {item.release_date.split("-")[0]}.
+                          {/* {item.genre_ids.map((elem, j) => {
                             for (let i = 0; i < genres.length; i++) {
                               if (genres[i].id === elem) {
-                                return <label key={j}>{genres[i].name}</label>;
+                                return (
+                                  <label className="movieData" key={j}>
+                                    {genres[i].name},
+                                  </label>
+                                );
                               }
                             }
+                          })} */}
+                          {item.genre_ids.map((elem, j) => {
+                            const genre = genres.find(
+                              (genre) => genre.id === elem
+                            );
+                            if (genre) {
+                              return (
+                                <label className="movieData" key={j}>
+                                  {genre.name},
+                                </label>
+                              );
+                            }
+                            return null; // Manejar el caso en que no se encuentre el género
                           })}
                         </label>
                         <p className="sinopsis">
