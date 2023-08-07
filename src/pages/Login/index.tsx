@@ -102,7 +102,7 @@ const Login = () => {
           <br />
           <form onSubmit={handleOnSubmit}>
             <div className="containerForm">
-              <label>Correo electrónico de Dacodes</label>
+              <label>Correo electrónico</label>
               <input
                 name="email"
                 className="input-style"
