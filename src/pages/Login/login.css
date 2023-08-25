@@ -1,6 +1,6 @@
 .container-login{
 	margin-left: 5%;
-	padding-top: 5%;
+	margin-top: 5%;
 }
 
 .containerForm {
@@ -15,7 +15,7 @@ label {
 }
 
 .input-style {
-	width: 30%;
+	width: 50%;
 	border-radius: 50px;
 	border: 0;
 	border: 1px solid #5141EA;
@@ -26,19 +26,8 @@ label {
 
 .container-button {
 	margin-top: 2%;
-	width: 15%;
+	width: 30%;
 }
 
-/* .custom-form-control-label {
-  display: flex;
-  flex-direction: column-reverse;
-  width: 30%;
-}
-
-.custom-label {
-  width: 100%;
-  padding-bottom: 2%;
-
-} */
 
 
